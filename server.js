@@ -56,3 +56,23 @@ var root = {
   }
 };
 //rolldice is passing two arguments... this is a resolver function to make an api call.
+type Mutation {
+  setMessage(message: String): String
+}
+
+type Query {
+  getMessage: String
+}
+// mutation is used when we are updating the existing data in the "database" and to insert data into "database"
+var fakeDatabase = {};
+var root = {
+  setMessage: ({message}) => {
+    fakeDatabase.message = message;
+    return message;
+  },
+  getMessage: () => {
+    return fakeDatabase.message;
+  }
+};
+// by using this mutaion we can simply output the data that have been updated in the databse to client 
+// this makes it easer.
