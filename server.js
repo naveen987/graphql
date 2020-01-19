@@ -20,7 +20,7 @@ var schema = buildSchema(`
 // "!" mark defines that the type is not nullable
 // "[int]" defines when we are using list like 
   type Query {
-  rollDice(numDice: Int!, numSides: Int): [Int]
+  rollDice(numDice: Int!, numSides: Int): [Int] //!!!daut!!!
 }
 // we will pass within [datatype] as a list
 
@@ -45,3 +45,14 @@ app.use('/graphql', graphqlHTTP({
 }));
 app.listen(4000);
 console.log('Running a GraphQL API server at localhost:4000/graphql');
+// passing arguments to the resolver function 
+var root = {
+  rollDice: ({numDice, numSides}) => {
+    var output = [];
+    for (var i = 0; i < numDice; i++) {
+      output.push(1 + Math.floor(Math.random() * (numSides || 6)));
+    }
+    return output;
+  }
+};
+//rolldice is passing two arguments... this is a resolver function to make an api call.
